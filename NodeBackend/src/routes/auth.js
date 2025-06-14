@@ -72,7 +72,7 @@ authRouter.post("/login", (req, res) => {
                         maxAge: 60 * 60 * 1000
                     })
                     console.log(user);
-                    
+
                     res.json({
                         user: user
                     })
@@ -94,9 +94,7 @@ authRouter.post("/login", (req, res) => {
     }
 })
 
-
-
-// Registeration of  Normal User , Store Owner only by system administrator,
+// Registeration of  Normal User , Store Owner and system administrator only by system administrator,
 
 authRouter.post("/admin/register", authAndAuthorize(1), (req, res) => {
     try {
@@ -131,6 +129,32 @@ authRouter.post("/admin/register", authAndAuthorize(1), (req, res) => {
 
     }
 })
+
+
+authRouter.post("/logout", authAndAuthorize(1, 2, 3), (req, res) => {
+
+    try {
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            path: "/"
+
+        })
+        console.log("cleared Cookies");
+        res.json({
+            ok: true,
+            message: "Logged Out"
+        })
+
+
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+
+    }
+})
+
+
 
 
 
