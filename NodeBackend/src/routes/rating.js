@@ -34,7 +34,7 @@ ratingRouter.post("/add-Rating", authAndAuthorize(1,2,3), (req, res) => {
 })
 
 
-// Update existing rating by user for a store
+
 ratingRouter.patch("/update-rating", authAndAuthorize(1,2,3), (req, res) => {
     try {
         const UserId = req.user?.UserId;
@@ -65,6 +65,33 @@ ratingRouter.patch("/update-rating", authAndAuthorize(1,2,3), (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+
+
+// Get users who rated stores owned by the logged-in store owner 
+ratingRouter.get("/store-ratings-users", authAndAuthorize(3), (req, res) => {
+    const ownerId = req.user?.UserId;
+
+    const query = `
+        SELECT  r.ratingId, r.rating, r.comment,   r.rated_at, u.UserId, u.FirstName,  u.LastName,   u.Email,
+            s.StoreId,  s.name AS StoreName  FROM ratings r
+        JOIN users u ON r.UserId = u.UserId
+        JOIN stores s ON r.StoreId = s.StoreId
+        WHERE s.UserId = ?
+    `;
+
+    db.pool.query(query, [ownerId], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: err.message });
+        }
+
+        res.status(200).json({
+            message: "List of users who rated your stores.",
+            data: results
+        });
+    });
+});
+
 
 
 module.exports = ratingRouter;

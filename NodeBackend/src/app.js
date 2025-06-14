@@ -7,6 +7,7 @@ const authRouter  = require("./routes/auth");
 const storeRouter = require("./routes/store");
 const userRouter = require("./routes/user");
 const ratingRouter = require("./routes/rating");
+const dashboardRouter  = require("./routes/adminDashBoard");
 
 
 app.use(express.json());
@@ -19,7 +20,7 @@ app.use(cors({
 
 
 
-app.use("/",authRouter,storeRouter,userRouter,ratingRouter);
+app.use("/",authRouter,storeRouter,userRouter,ratingRouter,dashboardRouter);
 app.use("/ping", (req, res, next) => {
     res.send("Hello from server")
 
