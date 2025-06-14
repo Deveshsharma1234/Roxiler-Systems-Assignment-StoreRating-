@@ -3,6 +3,7 @@ const { connectDB } = require("./config/db")
 const cookieParser = require('cookie-parser')
 const cors = require('cors');
 const app = express();
+const authRouter  = require("./routes/auth");
 
 
 
@@ -16,7 +17,7 @@ app.use(cors({
 
 
 
-app.use("/");
+app.use("/",authRouter);
 app.use("/ping", (req, res, next) => {
     res.send("Hello from server")
 

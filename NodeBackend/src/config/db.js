@@ -4,7 +4,7 @@ const pool = mysql.createPool({
     user: 'root',
     password: '12345',
     port: 3306,
-    database: 'Municipal_Complaint',
+    database: 'store_rating',
     waitForConnections: true,
     connectionLimit: 10,
     maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
