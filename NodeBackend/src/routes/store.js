@@ -41,6 +41,34 @@ storeRouter.post("/add-store", authAndAuthorize(1), async (req, res) => {
 
 
 
+// list of stores
+storeRouter.get("/all-stores",authAndAuthorize(1,2,3), (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                s.name AS storeName,
+                u.Email AS ownerEmail,
+                u.Address AS storeAddress,
+                ROUND(AVG(r.rating), 1) AS averageRating
+            FROM stores s
+            JOIN users u ON s.UserId = u.UserId
+            LEFT JOIN ratings r ON s.StoreId = r.StoreId
+            GROUP BY s.StoreId, s.name, u.Email, u.Address
+            ORDER BY s.name ASC;
+        `;
+
+        db.pool.query(query, (err, results) => {
+            if (err) {
+                return res.status(500).json({ message: err.message });
+            }
+            res.status(200).json(results);
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 
 
