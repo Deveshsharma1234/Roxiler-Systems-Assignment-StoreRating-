@@ -93,5 +93,17 @@ ratingRouter.get("/store-ratings-users", authAndAuthorize(3), (req, res) => {
 });
 
 
+//user-ratings
+ratingRouter.get("/user-ratings", authAndAuthorize(1, 2, 3), (req, res) => {
+    const UserId = req.user?.UserId;
+    const query = `SELECT StoreId, rating, comment FROM ratings WHERE UserId = ?`;
+    db.pool.query(query, [UserId], (err, results) => {
+        if (err) return res.status(500).json({ message: err.message });
+        res.status(200).json(results);
+    });
+});
+
+
+
 
 module.exports = ratingRouter;

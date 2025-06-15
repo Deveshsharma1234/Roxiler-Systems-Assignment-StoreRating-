@@ -59,5 +59,9 @@ INSERT INTO Roles (Role) VALUES
 ('Store Owner');
 
 
+ALTER TABLE ratings
+ADD CONSTRAINT unique_user_store_rating UNIQUE (UserId, StoreId);
+
+
 
 

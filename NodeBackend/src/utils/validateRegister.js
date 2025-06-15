@@ -4,7 +4,7 @@ const validateRegister = (req) => {
     const { FirstName, LastName, Email, Phone, Password ,Address} = req.body;
     if (!FirstName || !LastName || !Email || !Phone  || !Password) throw new Error("All fields are required error from backend");
       const fullName = `${FirstName} ${LastName}`.trim();
-    if (fullName.length < 20 || fullName.length > 60) {
+    if (fullName.length < 10 || fullName.length > 60) {
         throw new Error("Name must be between 20 and 60 characters.");
     }
 

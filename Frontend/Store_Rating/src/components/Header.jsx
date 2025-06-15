@@ -33,7 +33,7 @@ const Header = () => {
         Update Passowrd
       </button>
       {roleId === 1 ?<Link to={"/admin"}> <button className=' bg-black rounded-2xl px-4 py-2 hover:bg-purple-950'>System Admin</button></Link> : null}
-        {roleId === 3 ? <button className=' bg-black rounded-2xl px-4 py-2 hover:bg-purple-950'>System Admin</button> : null}
+        {roleId === 3 ? <Link to={"/admin"}><button className=' bg-black rounded-2xl px-4 py-2 hover:bg-purple-950'>System Admin</button></Link> : null}
 
       <button
         onClick={handleLogout}

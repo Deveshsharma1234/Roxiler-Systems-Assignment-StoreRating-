@@ -45,7 +45,7 @@ storeRouter.post("/add-store", authAndAuthorize(1), async (req, res) => {
 storeRouter.get("/all-stores",authAndAuthorize(1,2,3), (req, res) => {
     try {
         const query = `
-            SELECT 
+            SELECT s.StoreId,
                 s.name AS storeName,
                 u.Email AS ownerEmail,
                 u.Address AS storeAddress,
