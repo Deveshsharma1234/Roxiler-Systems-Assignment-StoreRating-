@@ -8,7 +8,7 @@ import { BASE_URL } from "../utils/constants";
 const useSignInWithEmailAndPassword = () => {
     const dispatch = useDispatch();
 
-    //   const loginHandler = 
+    
     return useCallback(async (emailRef, passwordRef, navigate) => {
         try {
             const Email = emailRef.current?.value;
@@ -55,7 +55,7 @@ const useSignInWithEmailAndPassword = () => {
                     transition: Bounce,
                 });
                 setTimeout(() => {
-                    navigate("/");
+                    navigate("/home");
                 }, 2000)
             } else {
                 toast.error(loggedInUser.error, { theme: "dark" });
@@ -66,7 +66,7 @@ const useSignInWithEmailAndPassword = () => {
         }
     }, [dispatch]);
 
-    //   return loginHandler;
+  
 }
 
 

@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import useSignInWithEmailAndPassword from "../hooks/useSignInWithEmailAndPassword"
+import { useSelector } from "react-redux";
 import { useRef } from 'react';
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 
 const Login = () => {
 
+    const isLoggedIn = useSelector(store => store.user.isLoggedIn)
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate("/");
+        }
+    }, [isLoggedIn, navigate]);
     let refEmail = useRef();
     let refPassword = useRef();
+    const login = useSignInWithEmailAndPassword();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Login submitted:");
-        
+        login(refEmail, refPassword, navigate);
+
     };
     return (
         <div>
+            <ToastContainer />
             <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
                 <div className="w-full max-w-sm p-6 bg-white rounded-2xl shadow-md">
                     <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
@@ -48,6 +63,9 @@ const Login = () => {
                             Login
                         </button>
                     </form>
+                    <h3 className="text-black text-center text-sm sm:text-base">
+                        New? <Link to="/register" className="text-purple-500 hover:underline">Register here</Link>
+                    </h3>
                 </div>
             </div>
         </div>
